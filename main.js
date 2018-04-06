@@ -20,7 +20,8 @@ function fetchIssues() {
             '<p><span class="glyphicon glyphicon-time"></span> ' + severity + ' ' +
             '<span class="glyphicon glyphicon-user"></span> ' + assignedTo + '</p>' +
             '<a href="#" class="btn btn-warning" onclick="setStatusClosed(\'' + id + '\')">Close</a> ' +
-            '<a href="#" class="btn btn-danger" onclick="deleteIssue(\'' + id + '\')">Delete</a>' +
+            '<a href="#" class="btn btn-danger" onclick="deleteIssue(\'' + id + '\')">Delete</a> ' +
+            '<a href="#" class="btn btn-info" onclick="progressIssue(\'' + id + '\')">In Progress ' +
             '</div>';
     }
 }
@@ -80,3 +81,16 @@ function deleteIssue (id) {
     
     fetchIssues();
   }
+function progressIssue(id) {
+    var issues = JSON.parse(localStorage.getItem('issues'));
+
+    for (var i = 0; i < issues.length; i++) {
+        if (issues[i].id == id) {
+            issues[i].status = "In Progress";
+        }
+    }
+
+    localStorage.setItem('issues', JSON.stringify(issues));
+
+    fetchIssues();
+}
